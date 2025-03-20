@@ -8,7 +8,7 @@ import {
   type PropsWithChildren,
 } from "react";
 import { UsersRecord } from "@/pocketbase-types";
-import pb from "../lib/pocketbase";
+import { usePocketBase } from "./PocketBaseProvider";
 
 // Add this to prevent auto hide of splash screen
 
@@ -43,6 +43,7 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const segments = useSegments();
+  const { pb } = usePocketBase();
 
   const [initialized, setInitialized] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -87,15 +88,19 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const appSignIn = async (email: string, password: string) => {
     if (!pb) return { error: "PocketBase not initialized" };
     try {
+      console.log("signing in");
       const resp = await pb
         .collection("users")
         .authWithPassword(email, password);
 
-      setUser(pb.authStore.isValid ? pb.authStore.model : null);
+      console.log("resp", resp);
+
+      setUser(pb.authStore.isValid ? pb.authStore.record : null);
       setIsLoggedIn(pb.authStore.isValid);
 
       return { user: resp?.record };
     } catch (e) {
+      console.log("error", e);
       return { error: e };
     }
   };

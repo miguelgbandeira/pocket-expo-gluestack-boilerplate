@@ -21,9 +21,7 @@ const Welcome = () => {
             alt="image"
             className="mb-8 padding-4"
           />
-          <Heading className="text-3xl text-center">
-            Welcome to NativeExpress!
-          </Heading>
+          <Heading className="text-3xl text-center">Welcome to Sushi!</Heading>
         </Center>
 
         <VStack space="md" className="w-full max-w-sm">
