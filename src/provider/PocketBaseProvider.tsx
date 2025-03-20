@@ -35,10 +35,7 @@ export const PocketBaseProvider = ({ children }: PocketBaseProviderProps) => {
       });
 
       // TODO: Replace with your actual PocketBase URL
-      const pbInstance = new PocketBase(
-        process.env.EXPO_PUBLIC_POCKETBASE_URL,
-        store
-      );
+      const pbInstance = new PocketBase(process.env.POCKETBASE_URL, store);
       setPb(pbInstance);
     };
 
